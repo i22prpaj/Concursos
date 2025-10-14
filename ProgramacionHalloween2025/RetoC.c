@@ -1,12 +1,28 @@
 #include <stdio.h> // For printf, scanf
 #include <string.h> // For strlen
-#include <stdlib.h> // For system("cls")
+#include <stdlib.h> // For system("cls"), exit
 #include <unistd.h> // For sleep
+#include <ctype.h>  // For isalpha, isdigit
 
 #define SIZE 100
 
-void contar_letras_cadena(char *cadena);
+void contar_letras_cadena(char *cadena){
+    int n_letras = 0, n_digitos = 0, n_otros = 0;
+    for(int i = 0; cadena[i] != '\0'; i++){
+        if(isdigit(cadena[i]))
+            n_digitos++;
+        else if(isalpha(cadena[i]))
+            n_letras++;
+        else
+            n_otros++;
+    }
+    printf("La cadena contiene: ");
+    printf("%d letras, %d nº, %d caracteres especiales\n", n_letras, n_digitos, n_otros);
+}
+
 void limpiar_pantalla();
+
+void normalizar_cadena(char *cadena);
 
 int main() {
     printf("¡Feliz Halloween 2025! 🎃👻\n");
@@ -54,13 +70,15 @@ int main() {
                 printf("Has elegido contar caramelos 🍬\n");
                 printf("Introduce una cadena: ");
                 scanf("%s", cadena);
-                printf("La longitud de la cadena es: %lu\n", strlen(cadena));
-                //contar_letras_cadena(cadena);
-                printf("Presiona Enter para continuar...");
-                getchar(); // Limpiar buffer
-                getchar(); // Espera a que el usuario presione Enter
+                contar_letras_cadena(cadena);
+                printf("La longitud total de la cadena es: %lu\n", strlen(cadena));
                 break;
             case 2:
+                printf("Has elegido limpiar el conjuro 🧙\n");
+                printf("Introduce una cadena: ");
+                scanf("%s", cadena);
+                //normalizar_cadena(cadena);
+                printf("Cadena normalizada: %s\n", cadena);
                 break;
             case 3:
                 break;
@@ -79,11 +97,15 @@ int main() {
             case 0:
                 printf("¡Hasta la próxima! 🎃👻\n");
                 sleep(1);
-                break;
+                exit(EXIT_SUCCESS);
             default:
                 printf("Opción no válida. Por favor, elige de nuevo.\n");
                 break;
         }
+
+        printf("Presiona Enter para continuar...");
+        getchar(); // Limpiar buffer
+        getchar(); // Espera a que el usuario presione Enter
         
         // Limpiar pantalla después de la selección
         #ifdef _WIN32
@@ -92,5 +114,5 @@ int main() {
             system("clear");
         #endif
     } while(o != 0);
-    return 0;
+    exit(EXIT_SUCCESS);
 }

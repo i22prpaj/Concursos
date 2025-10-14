@@ -1,8 +1,29 @@
 #include <iostream>
 #include <string>
+#include <cctype>    // Para isalpha, isdigit
 using namespace std;
 
-void contar_letras_cadena(const string &cadena);
+// Implementación de la función contar_letras_cadena
+void contar_letras_cadena(const string &cadena) {
+    int n_letras = 0, n_digitos = 0, n_otros = 0;
+    
+    for(auto c : cadena) {
+        if(isdigit(c))
+            n_digitos++;
+        else if(isalpha(c))
+            n_letras++;
+        else
+            n_otros++;
+    }
+    
+    cout << "La cadena contiene: " 
+         << n_letras << " letras, " 
+         << n_digitos << " nº, " 
+         << n_otros << " caracteres especiales" << endl;
+}
+
+void limpiar_pantalla();
+void normalizar_cadena(string &cadena);
 
 int main() {
     cout << "¡Feliz Halloween 2025! 🎃👻" << endl
@@ -12,7 +33,7 @@ int main() {
          << "·Estudiante de Ingeniería Informática en la EPSC" << endl
          << "·Mención: Computación" << endl
          << "Presiona Enter para continuar...";
-    getchar(); // Esperar Enter
+    getchar();
 
     #ifdef _WIN32
         system("cls");
@@ -48,10 +69,15 @@ int main() {
                 cout << "Has elegido contar caramelos 🍬" << endl
                      << "Introduce una cadena: ";
                 cin >> cadena;
-                //contar_letras_cadena(cadena);
-                cout << "La longitud de la cadena es: " << cadena.length() << endl;
+                contar_letras_cadena(cadena);
+                cout << "La longitud total de la cadena es: " << cadena.length() << endl;
                 break;
             case 2:
+                cout << "Has elegido limpiar el conjuro 🧙" << endl
+                     << "Introduce una cadena: ";
+                cin >> cadena;
+                //normalizar_cadena(cadena);
+                cout << "Cadena normalizada: " << cadena << endl;
                 break;
             case 3:
                 break;
@@ -74,7 +100,7 @@ int main() {
                 cout << "Opción no válida. Por favor, elige de nuevo." << endl;
                 break;
         }
-        
+
         cout << "Presiona Enter para continuar...";
         while(getchar() != '\n'); // Limpiar buffer
             getchar(); // Esperar Enter

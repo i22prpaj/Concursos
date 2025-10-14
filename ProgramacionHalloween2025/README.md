@@ -90,10 +90,10 @@ g++ RetoC++.cpp -o RetoC++
 ### 🐚 RetoBash (Bash Script)
 ```bash
 # Hacer ejecutable
-chmod +x retobash.sh
+chmod +x RetoBash.sh
 
 # Ejecutar
-./retobash.sh
+./RetoBash.sh
 ```
 🔄 **Estado:** Próximamente disponible
 
@@ -149,8 +149,9 @@ ProgramacionHalloween2025/
 ├── README.md           # Este archivo
 ├── RetoC.c            # Implementación en C
 ├── RetoC++.cpp        # Implementación en C++
-├── retobash.sh        # Implementación en Bash (próximamente)
-├── Utils/             # Utilidades y funciones auxiliares
+├── RetoBash.sh        # Implementación en Bash (Próximamente)
+├── Utils/             # Utilidades y funciones 
+Auxs
 └── Docs/              # Documentación adicional
 ```
 
