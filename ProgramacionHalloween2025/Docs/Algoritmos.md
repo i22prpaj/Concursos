@@ -95,8 +95,51 @@ class InventarioCalabazas {
 ```
 
 ## 🎭 4. Truco o Trato
-**Algoritmo:** Cálculo de media y mediana
+**Algoritmo:** Cálculo de media y mediana  
 **Decisión:** Si media > mediana → "Trato", sino → "Truco"
+
+```cpp
+double calcularMedia(const vector<int>& edades) {
+    if (edades.empty()) 
+        return 0;
+    int suma = 0;
+    for (int edad : edades)
+        suma += edad;
+    return static_cast<double>(suma) / edades.size();
+}
+
+double calcularMediana(const vector<int>& edades) {
+    if (edades.empty())
+        return 0;
+    vector<int> copia = edades;
+    sort(copia.begin(), copia.end());
+    size_t n = copia.size();
+    if (n % 2 == 0)
+        return (copia[n / 2 - 1] + copia[n / 2]) / 2.0;
+    else
+        return copia[n / 2];
+}
+
+void truco_trato(double media, double mediana) {
+    cout << "\n=== DECISIÓN ===" << endl;
+    cout << "Media: " << media << " años" << endl;
+    cout << "Mediana: " << mediana << " años" << endl;
+
+    if (media < 12 && mediana < 12) {
+        cout << "\n🍬 ¡TRATO! (Dulces)" << endl;
+        cout << "Razón: Grupo de niños pequeños (media y mediana < 12)" << endl;
+    } else if (media >= 15 && mediana >= 15) {
+        cout << "\n🎃 ¡TRUCO! (Broma o actividad)" << endl;
+        cout << "Razón: Grupo de adolescentes/adultos (media y mediana >= 15)" << endl;
+    } else if (media >= 12 && mediana >= 12) {
+        cout << "\n🎭 ¡TRUCO Y TRATO!" << endl;
+        cout << "Razón: Grupo mixto de pre-adolescentes y mayores" << endl;
+    } else {
+        cout << "\n🍭 ¡TRATO! (Dulces)" << endl;
+        cout << "Razón: Predominan los niños en el grupo" << endl;
+    }
+}
+```
 
 ## 💀 5. Ruta en el Cementerio (BFS)
 **Complejidad temporal:** O(V + E)  
