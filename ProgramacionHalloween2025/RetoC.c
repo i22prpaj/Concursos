@@ -223,6 +223,51 @@ void reto3(){
     } while (opcion != 0);
 }
 
+float calcularMedia(int edades[], int n){
+    int suma = 0;
+    for(int i = 0; i < n; i++){
+        suma += edades[i];
+    }
+    return (float)suma / n;
+}
+
+// Función de comparación para qsort
+int comparar(const void *a, const void *b) {
+    return (*(int*)a - *(int*)b);
+}
+
+float calcularMediana(int edades[], int n){
+    // Ordenar el array
+    qsort(edades, n, sizeof(int), comparar);
+    if(n % 2 == 0) //Promedio de los 2 valores centrales
+        return (edades[n/2 - 1] + edades[n/2]) / 2.0;
+    else //Valor central
+        return edades[n/2];
+}
+
+void truco_trato(float media, float mediana){
+    printf("Media de edades: %f\n", media);
+    printf("Mediana de edades: %f\n", mediana);
+
+    //
+    if (media < 12 && mediana < 12) {
+        printf("\n🍬 ¡TRATO! (Dulces)\n");
+        printf("Razón: Grupo de niños pequeños (media y mediana < 12)\n");
+    }
+    else if (media >= 15 && mediana >= 15) {
+        printf("\n🎃 ¡TRUCO! (Broma o actividad)\n");
+        printf("Razón: Grupo de adolescentes/adultos (media y mediana >= 15)\n");
+    }
+    else if (media >= 12 && mediana >= 12) {
+        printf("\n🎭 ¡TRUCO Y TRATO!\n");
+        printf("Razón: Grupo mixto de pre-adolescentes y mayores\n");
+    }
+    else {
+        printf("\n🍭 ¡TRATO! (Dulces)\n");
+        printf("Razón: Predominan los niños en el grupo\n");
+    }
+}
+
 int main() {
     printf("¡Feliz Halloween 2025! 🎃👻\n");
     printf("Realizado en C\n");
@@ -239,7 +284,7 @@ int main() {
         system("clear");
     #endif
 
-    int o = 0;
+    int o = 0, n;
     char cadena[SIZE];
     char cadena_normalizada[SIZE];
 
@@ -287,7 +332,29 @@ int main() {
                 break;
             case 4:
                 printf("Has elegido el truco o trato 🎭\n");
-                printf("Esta opción aún no está implementada.\n");
+                printf("¿Cuántas personas hay en el grupo? ");
+                scanf("%d", &n);
+                if (n <= 0) {
+                    printf("Error: Debe haber al menos una persona.\n");
+                    break;
+                }
+                int *edades = (int*)malloc(n * sizeof(int));
+                for (int i = 0; i < n; i++) {
+                    printf("Edad de la persona %d: ", i + 1);
+                    scanf("%d", &edades[i]);
+        
+                    if (edades[i] < 0 || edades[i] > 120) {
+                        printf("Error: Edad inválida.\n");
+                        free(edades);
+                        break;
+                    }
+                }
+                // Calcular estadísticas
+                float media = calcularMedia(edades, n);
+                float mediana = calcularMediana(edades, n);
+
+                truco_trato(media, mediana);
+                free(edades);
                 break;
             case 5:
                 break;
