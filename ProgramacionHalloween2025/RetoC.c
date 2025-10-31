@@ -2,7 +2,7 @@
 #include <string.h> // For strlen
 #include <stdlib.h> // For system("cls"), exit
 #include <unistd.h> // For sleep
-#include <ctype.h>  // For isalpha, isdigit
+#include <ctype.h>  // For isalpha, isdigit, tolower
 
 #define SIZE 100
 
@@ -22,7 +22,72 @@ void contar_letras_cadena(char *cadena){
 
 void limpiar_pantalla();
 
-void normalizar_cadena(char *cadena);
+/*char eliminar_tilde(char c) {
+    char *tildes = "áàäâéèëêíìïîóòöôúùüûñç";
+    char *sin =    "aaaaeeeeiiiioooouuuunc";
+    char *p = strchr(tildes, c); //compara caracter, devuelve la primera ocurrencia
+    if (p) {
+        return sin[p - tildes];
+    } 
+    else {
+        return c;
+    }
+}*/
+
+// Estructura para mapeo de tildes
+typedef struct {
+    char original;
+    char reemplazo;
+} TildeMap;
+
+char *normalizar_cadena(const char *entrada, char *salida){
+    // Tabla de mapeo de tildes
+    TildeMap tabla[] = {
+        {'á','a'}, {'à','a'}, {'ä','a'}, {'â','a'},
+        {'é','e'}, {'è','e'}, {'ë','e'}, {'ê','e'},
+        {'í','i'}, {'ì','i'}, {'ï','i'}, {'î','i'},
+        {'ó','o'}, {'ò','o'}, {'ö','o'}, {'ô','o'},
+        {'ú','u'}, {'ù','u'}, {'ü','u'}, {'û','u'},
+        {'ñ','n'}, {'ç','c'}
+    };
+    int tabla_size = sizeof(tabla) / sizeof(tabla[0]);
+    int j = 0;
+    for(int i = 0; entrada[i] != '\0'; i++){
+        char c = tolower((unsigned char)entrada[i]);
+        //c = eliminar_tilde(c);
+        for (int k = 0; k < tabla_size; k++) {
+            if (c == tabla[k].original) {
+                c = tabla[k].reemplazo;
+                break;
+            }
+        }
+        /*if(!isalnum(c)){
+            // Desplazar caracteres hacia la izquierda, dejando los no-alfanuméricos fuera (derecha)
+            for(int j = i; cadena[j] != '\0'; j++){
+                cadena[j] = cadena[j + 1];
+            }
+            i--; // Stay at the same index to check the new character
+        }*/
+        if (isalnum((unsigned char)c)) {
+            salida[j++] = c;
+        }
+    }
+    salida[j] = '\0';
+    return salida;
+}
+
+/*char *normalizar_cadena(const char *entrada, char *salida) {
+    int j = 0;
+    for (int i = 0; entrada[i] != '\0'; i++) {
+        char c = tolower((unsigned char)entrada[i]);
+        c = eliminar_tilde(c);
+        if (isalnum((unsigned char)c)) {
+            salida[j++] = c; // Solo copiar si es alfanumérico
+        }
+    }
+    salida[j] = '\0';
+    return salida;
+}*/
 
 int main() {
     printf("¡Feliz Halloween 2025! 🎃👻\n");
@@ -42,6 +107,7 @@ int main() {
 
     int o = 0;
     char cadena[SIZE];
+    char cadena_normalizada[SIZE];
 
     do{
         printf("Menú de Halloween 2025 🎃👻\n");
@@ -77,8 +143,9 @@ int main() {
                 printf("Has elegido limpiar el conjuro 🧙\n");
                 printf("Introduce una cadena: ");
                 scanf("%s", cadena);
-                //normalizar_cadena(cadena);
-                printf("Cadena normalizada: %s\n", cadena);
+                //strcpy(cadena, normalizar_cadena(cadena));
+                normalizar_cadena(cadena, cadena_normalizada);
+                printf("Cadena normalizada: %s\n", cadena_normalizada);
                 break;
             case 3:
                 break;
