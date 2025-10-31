@@ -3,7 +3,7 @@
 #include <cctype> // Para isalpha, isdigit, tolower
 #include <map>
 #include <vector>
-#include <algorithm>
+#include <algorithm> // Para sort
 using namespace std;
 
 // Implementación de la función contar_letras_cadena
@@ -192,54 +192,46 @@ void reto3(){
     }while(opcion != 0);
 }
 
-class EstadisticasEdades {
-    private:
-        vector<int> edades_;
-    public:
-    // Constructor
-    EstadisticasEdades(vector<int> edades) : edades_(edades) {}
+// Calcular la media
+double calcularMedia(const vector<int>& edades) {
+    if (edades.empty()) 
+        return 0;
     
-    // Calcular la media
-    double calcularMedia() {
-        if (edades_.empty()) 
-            return 0;
-        
-        int suma = 0;
-        for (int edad : edades_)
-            suma += edad;
-            
-        return static_cast<double>(suma) / edades_.size();
-    }
-    // Calcular la mediana
-    double calcularMediana() {
-        if (edades_.empty())
-            return 0;
-        sort(edades_.begin(), edades_.end());
-        size_t n = edades_.size();
-        if (n % 2 == 0) 
-            return (edades_[n / 2 - 1] + edades_[n / 2]) / 2.0;
-        else
-            return edades_[n / 2];
-    }
-};
+    int suma = 0;
+    for (int edad : edades)
+        suma += edad;
 
-void truco_trato(double media, double mediana){
-    cout << "=== ESTADÍSTICAS DEL GRUPO ===" << endl
-         << "Media de edades: " << media << endl
-         << "Mediana de edades: " << mediana << endl;
+    return static_cast<double>(suma) / edades.size();
+}
+
+// Calcular la mediana
+double calcularMediana(const vector<int>& edades) {
+    if (edades.empty())
+        return 0;
+    vector<int> copia = edades;
+    sort(copia.begin(), copia.end());
+    size_t n = copia.size();
+    if (n % 2 == 0)
+        return (copia[n / 2 - 1] + copia[n / 2]) / 2.0;
+    else
+        return copia[n / 2];
+}
+
+void truco_trato(double media, double mediana) {
+    cout << "\n=== DECISIÓN ===" << endl;
+    cout << "Media: " << media << " años" << endl;
+    cout << "Mediana: " << mediana << " años" << endl;
+
     if (media < 12 && mediana < 12) {
         cout << "\n🍬 ¡TRATO! (Dulces)" << endl;
         cout << "Razón: Grupo de niños pequeños (media y mediana < 12)" << endl;
-    } 
-    else if (media >= 15 && mediana >= 15) {
+    } else if (media >= 15 && mediana >= 15) {
         cout << "\n🎃 ¡TRUCO! (Broma o actividad)" << endl;
         cout << "Razón: Grupo de adolescentes/adultos (media y mediana >= 15)" << endl;
-    } 
-    else if (media >= 12 && mediana >= 12) {
+    } else if (media >= 12 && mediana >= 12) {
         cout << "\n🎭 ¡TRUCO Y TRATO!" << endl;
         cout << "Razón: Grupo mixto de pre-adolescentes y mayores" << endl;
-    } 
-    else {
+    } else {
         cout << "\n🍭 ¡TRATO! (Dulces)" << endl;
         cout << "Razón: Predominan los niños en el grupo" << endl;
     }
@@ -264,6 +256,7 @@ int main() {
     int o = 0, n_personas, edad;
     string cadena;
     vector<int> edades;
+    double media, mediana;
     do{
         cout << "Menú de Halloween 2025 🎃👻" << endl
              << "1. Contar caramelos 🍬" << endl
@@ -322,6 +315,9 @@ int main() {
                     edades.push_back(edad);
                 }
                 //
+                media = calcularMedia(edades);
+                mediana = calcularMediana(edades);
+                truco_trato(media, mediana);
                 break;
             case 5:
                 break;
