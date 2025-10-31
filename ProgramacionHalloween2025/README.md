@@ -99,6 +99,23 @@ chmod +x RetoBash.sh
 
 ---
 
+## Estructura
+- `Docs/Algoritmos.md`: Explicaciones detalladas de cada algoritmo y decisión tomada.
+
+## Retos implementados
+1. **Contar caramelos**: Cuenta letras, números y caracteres especiales en una cadena.
+2. **Limpiar el conjuro**: Normaliza cadenas (minúsculas, sin tildes ni signos).
+3. **Inventario de calabazas**: Suma cantidades por nombre de calabaza.
+4. **Truco o Trato**: Decide según media y mediana de edades.
+5. **Ruta en el cementerio (BFS)**: (En construcción)
+6. **Compresor de aullidos (RLE)**: (En construcción)
+7. **Agenda embrujada**: (En construcción)
+8. **Censo de fantasmas**: (En construcción)
+9. **Cifrado del vampiro (ROT-N)**: (En construcción)
+10. **Lista de pociones**: (En construcción)
+
+---
+
 ## 📋 Fases del Concurso
 
 ### 📝 Fase 1: Resolución de Concurso
