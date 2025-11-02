@@ -1,11 +1,9 @@
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 project(RetoC++)
 
-add_executable(
-    RetoC++
-    RetoC++.cpp
-    Reto1.cpp
-    Reto2.cpp
-    Reto3.cpp
-    Reto4.cpp
-)
+# Configurar estándar C++
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Adding subdirs
+add_subdirectory(src)
